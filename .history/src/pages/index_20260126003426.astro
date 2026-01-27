@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectList from '../components/ProjectList';
+---
+
+<Layout title="Minox Portfolio - Retouching & Design">
+	<div class="mb-8">
+		<h1 class="text-3xl font-extrabold text-gray-900 tracking-tight mb-2">Projects</h1>
+		<p class="text-gray-500">Danh sách các dự án Retouching & Design tiêu biểu.</p>
+	</div>
+
+	<ProjectList client:load />
+</Layout>

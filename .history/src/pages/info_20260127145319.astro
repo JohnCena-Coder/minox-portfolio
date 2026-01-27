@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { supabase } from '../lib/supabase';
+
+// 1. Fetch dữ liệu Profile
+const { data: profile } = await supabase.from('profile').select('*').single();
+
+// Fallback nếu chưa có ảnh
+const info = profile || {
+    bio_img: 'https://placehold.co/600x800/png?text=UPLOAD+YOUR+INFO+IMAGE'
+};
+---
+
+<Layout title={`MINOX | ABOUT`}>
+    <div class="w-full min-h-[80vh] flex items-center justify-center bg-[#f3f2ef] py-12 px-4">
+        
+        {/* KHUNG CHỨA ẢNH DUY NHẤT */}
+        {/* Tăng kích thước khung để ảnh hiển thị rõ ràng */}
+        <div class="w-full max-w-[600px] bg-white border border-black shadow-2xl overflow-hidden">
+             
+             {/* Hiển thị ảnh gốc: Không chỉnh màu, không làm mờ, không đè chữ */}
+             <img 
+                src={info.bio_img} 
+                alt="Minox Info"
+                class="w-full h-auto block object-contain"
+             />
+             
+        </div>
+
+    </div>
+</Layout>

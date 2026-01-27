@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { supabase } from '../lib/supabase';
+
+// Fetch dữ liệu Server-side (Astro chạy code này lúc build hoặc request)
+let infoImg = null;
+const { data, error } = await supabase.from('info_content').select('image_url').limit(1).single();
+
+if (data) {
+  infoImg = data.image_url;
+}
+---
+
+<Layout title="Info & Skills - Minox">
+  <div class="flex flex-col items-center justify-center min-h-[60vh] animate-in fade-in duration-500">
+    {infoImg ? (
+      <div class="max-w-4xl w-full">
+        <img 
+          src={infoImg} 
+          alt="Info Bio" 
+          class="w-full h-auto rounded-lg shadow-2xl border border-gray-200"
+        />
+      </div>
+    ) : (
+      <div class="text-center text-gray-500 mt-10">
+        <h2 class="text-xl font-medium">Đang cập nhật thông tin...</h2>
+        <p>Vui lòng quay lại sau.</p>
+      </div>
+    )}
+  </div>
+</Layout>

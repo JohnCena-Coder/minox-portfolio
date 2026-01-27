@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectList from '../components/ProjectList';
+---
+
+<Layout title="MINOX | VISUAL ARCHIVE">
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-black h-16">
+        <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
+            
+            <a href="/" class="flex items-center gap-4 cursor-pointer group">
+                <div class="w-10 h-10 bg-black text-white flex items-center justify-center font-vibe text-2xl font-bold transition-transform group-hover:rotate-12">M</div>
+                <div class="hidden md:block">
+                    <h1 class="font-vibe text-xl font-bold tracking-tighter leading-none">MINOX / MINH N.</h1>
+                    <p class="text-[10px] tracking-widest uppercase text-gray-500 font-bold">Graphic Design / Visual Design</p>
+                </div>
+            </a>
+
+            <div class="flex space-x-12 h-full">
+                <a href="/" class="group flex flex-col items-center justify-center h-full relative">
+                    <span class="font-vibe text-lg font-bold tracking-widest text-black transition-colors">WORK</span>
+                    <span class="absolute bottom-0 w-full h-[2px] bg-black"></span>
+                </a>
+                
+                <a href="/info" class="group flex flex-col items-center justify-center h-full relative">
+                    <span class="font-vibe text-lg font-bold tracking-widest text-gray-400 group-hover:text-black transition-colors">ABOUT</span>
+                    <span class="absolute bottom-0 w-0 h-[2px] bg-black group-hover:w-full transition-all duration-300"></span>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex items-center border-b border-gray-300 focus-within:border-black transition-colors pb-1">
+                    <input type="text" placeholder="SEARCH ARCHIVE" class="bg-transparent border-none outline-none text-sm font-vibe w-32 placeholder:text-gray-300 text-black uppercase" />
+                </div>
+                <a href="/admin" class="text-xs font-bold font-vibe border border-black px-3 py-1 hover:bg-black hover:text-white transition-colors cursor-pointer tracking-widest">
+                    LOGIN
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto mt-12 px-6 pb-20 min-h-screen">
+        <ProjectList client:load />
+    </main>
+
+    <footer class="bg-white text-black mt-auto border-t border-black pt-16">
+        <div class="max-w-6xl mx-auto px-4 pt-4 pb-8 text-center">
+            <div class="w-8 h-8 bg-black text-white flex items-center justify-center font-vibe text-lg font-bold mx-auto mb-6">M</div>
+            <h2 class="font-vibe text-3xl md:text-4xl font-bold tracking-[0.2em] leading-tight uppercase">
+                READY TO <span class="border-b-2 border-black pb-1">VIBE?</span>
+            </h2>
+            <p class="font-vibe text-xs text-gray-400 mt-4 tracking-[0.3em] uppercase">Send your frequency</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 pb-16">
+            <form class="space-y-6" onsubmit="event.preventDefault(); alert('Signal Sent!');">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <input type="text" required class="input-vibe-line w-full" placeholder="NAME" />
+                    </div>
+                    <div>
+                        <input type="email" required class="input-vibe-line w-full" placeholder="EMAIL" />
+                    </div>
+                </div>
+                <div>
