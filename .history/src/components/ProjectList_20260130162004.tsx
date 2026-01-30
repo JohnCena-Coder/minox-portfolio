@@ -118,7 +118,7 @@ export default function ProjectList() {
                     <div key={project.id} className="group mb-16">
                         <div onClick={() => openOverlay(project)} className="flex justify-between items-end mb-6 border-b border-black pb-4 cursor-pointer">
                             <div className="group/title">
-                                <h3 className="font-vibe text-3xl md:text-4xl font-black tracking-tighter leading-none text-black group-hover/title:text-blue-600 transition-colors duration-300 uppercase">
+                                <h3 className="font-vibe text-5xl md:text-6xl font-black tracking-tighter leading-none text-black group-hover/title:text-blue-600 transition-colors duration-300 uppercase">
                                     {project.title}
                                 </h3>
                                 <div className="flex items-center gap-3 mt-3">
@@ -172,7 +172,7 @@ export default function ProjectList() {
         <div className="flex-1 overflow-y-auto p-6 md:p-12 bg-white">
             {selectedProject && (
                 <div className="max-w-6xl mx-auto pb-20 animate-fade-in">
-                    <h1 className="font-vibe text-6xl md:text-8xl font-black tracking-tighter leading-none mb-4 text-black border-b-[6px] border-black pb-4 uppercase">
+                    <h1 className="font-vibe text-1xl md:text-2xl font-black tracking-tighter leading-none mb-4 text-black border-b-[6px] border-black pb-4 uppercase">
                         {selectedProject.title}
                     </h1>
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-12">

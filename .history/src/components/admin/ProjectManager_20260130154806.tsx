@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import type { Project, Item } from '../../types';
 import { uploadImage } from '../../utils/upload';
+// FIX 1: Import thêm icon X
 import { Image as ImageIcon, X } from 'lucide-react';
 
-// --- COMPONENTS CON ---
+// --- COMPONENTS CON (GIỮ NGUYÊN) ---
 const VibeLabel = ({children}: {children: React.ReactNode}) => (
   <label className="block font-vibe uppercase tracking-tighter leading-none text-xs text-gray-500 mb-2">
     {children}
@@ -17,7 +18,7 @@ const VibeInput = (props: any) => (
     className={`w-full p-3 border border-gray-200 font-vibe font-medium outline-none focus:border-black focus:bg-white bg-gray-50 transition-all text-sm ${props.className || ''}`} 
   />
 );
-// ----------------------
+// -----------------------------------
 
 export default function ProjectManager() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -25,7 +26,7 @@ export default function ProjectManager() {
   const [loading, setLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  // -- 1. FETCH DATA --
+  // -- 1. FETCH DATA (LOGIC GIỮ NGUYÊN) --
   const fetchProjects = async () => {
     setLoading(true);
     const { data } = await supabase
@@ -50,12 +51,11 @@ export default function ProjectManager() {
 
   useEffect(() => { fetchProjects(); }, []);
 
-  // -- 2. HANDLERS --
+  // -- 2. HANDLERS (CÁC HÀM CŨ GIỮ NGUYÊN) --
   const handleCreateNew = async () => {
     const title = prompt("Nhập tên dự án mới:");
     if (!title) return;
     
-    // Mặc định type là 'review' để hiện ô Before/After
     const { data, error } = await supabase.from('projects').insert({
         title, type: 'review', priority: 10
     }).select().single();
@@ -79,6 +79,7 @@ export default function ProjectManager() {
         }).eq('id', selectedProject.id);
 
         for (const item of selectedProject.items) {
+            // Đảm bảo gallery_imgs là mảng hoặc null, tránh lỗi gửi lên Supabase
             const sanitizedGallery = (item.gallery_imgs && item.gallery_imgs.length > 0) ? item.gallery_imgs : null;
 
             const itemPayload = {
@@ -87,8 +88,8 @@ export default function ProjectManager() {
                 description: item.description,
                 tool_used: item.tool_used,
                 priority: item.priority,
-                before_img: item.before_img || null,
-                after_img: item.after_img || null,
+                before_img: item.before_img || null, // Đảm bảo null nếu rỗng
+                after_img: item.after_img || null,   // Đảm bảo null nếu rỗng
                 gallery_imgs: sanitizedGallery
             };
 
@@ -125,7 +126,7 @@ export default function ProjectManager() {
         priority: 0,
         description: '',
         tool_used: '',
-        gallery_imgs: []
+        gallery_imgs: [] // Khởi tạo mảng rỗng
     };
     setSelectedProject({
         ...selectedProject,
@@ -156,16 +157,18 @@ export default function ProjectManager() {
     if(url) callback(url);
   };
 
+  // FIX 2: Hàm mới để xóa 1 ảnh khỏi mảng gallery
   const handleRemoveGalleryImage = (itemIndex: number, imgIndexToRemove: number) => {
       if (!selectedProject) return;
       const currentItem = selectedProject.items[itemIndex];
       const currentGallery = currentItem.gallery_imgs || [];
+      // Lọc bỏ ảnh tại vị trí index cần xóa
       const newGallery = currentGallery.filter((_, i) => i !== imgIndexToRemove);
       handleUpdateItem(itemIndex, 'gallery_imgs', newGallery);
   };
 
 
-  // --- GIAO DIỆN ---
+  // --- GIAO DIỆN (ĐÃ CẬP NHẬT NÚT XÓA) ---
   return (
     <div className="flex flex-col h-full w-full bg-white">
         {/* HEADER */}
@@ -286,11 +289,11 @@ export default function ProjectManager() {
                                                     <div className="grid grid-cols-2 gap-3">
                                                         <div className="space-y-2">
                                                             <VibeLabel>Before</VibeLabel>
-                                                            {/* FIX: Thay aspect-square bằng h-40 cố định để chắc chắn hiện */}
-                                                            <div className="h-40 w-full bg-gray-100 border border-gray-200 relative group/upload overflow-hidden">
+                                                            <div className="aspect-square bg-gray-100 border border-gray-200 relative group/upload overflow-hidden">
                                                                 {item.before_img ? (
                                                                     <>
                                                                         <img src={item.before_img} className="w-full h-full object-cover" />
+                                                                        {/* FIX 3: Nút xóa ảnh Before */}
                                                                         <button 
                                                                             onClick={(e) => {e.stopPropagation(); handleUpdateItem(idx, 'before_img', null)}}
                                                                             className="absolute top-2 right-2 bg-white text-black p-1 rounded-full hover:bg-red-500 hover:text-white hover:border-red-500 border border-gray-200 z-20 transition-all opacity-0 group-hover/upload:opacity-100 shadow-sm"
@@ -308,11 +311,11 @@ export default function ProjectManager() {
                                                         </div>
                                                         <div className="space-y-2">
                                                             <VibeLabel>After (Main)</VibeLabel>
-                                                            {/* FIX: Thay aspect-square bằng h-40 cố định */}
-                                                            <div className="h-40 w-full bg-gray-100 border border-blue-200 relative group/upload overflow-hidden">
+                                                            <div className="aspect-square bg-gray-100 border border-blue-200 relative group/upload overflow-hidden">
                                                                 {item.after_img ? (
                                                                     <>
                                                                         <img src={item.after_img} className="w-full h-full object-cover" />
+                                                                        {/* FIX 3: Nút xóa ảnh After */}
                                                                         <button 
                                                                             onClick={(e) => {e.stopPropagation(); handleUpdateItem(idx, 'after_img', null)}}
                                                                             className="absolute top-2 right-2 bg-white text-black p-1 rounded-full hover:bg-red-500 hover:text-white hover:border-red-500 border border-gray-200 z-20 transition-all opacity-0 group-hover/upload:opacity-100 shadow-sm"
@@ -331,7 +334,8 @@ export default function ProjectManager() {
                                                     </div>
                                                 ) : (
                                                     // --- NORMAL MODE (Gallery) ---
-                                                    <div className="h-full min-h-[160px] bg-gray-50 border border-dashed border-gray-300 p-4 flex flex-col items-center justify-center text-center relative">
+                                                    <div className="h-full bg-gray-50 border border-dashed border-gray-300 p-4 flex flex-col items-center justify-center text-center relative">
+                                                        {/* FIX 4: Hiển thị danh sách thumbnail có nút xóa */}
                                                         {item.gallery_imgs && item.gallery_imgs.length > 0 && (
                                                             <div className="flex flex-wrap gap-3 justify-center mb-4 w-full">
                                                                 {item.gallery_imgs.map((img, imgIdx) => (
@@ -358,6 +362,7 @@ export default function ProjectManager() {
                                                                     const u = await uploadImage(e.target.files[i]);
                                                                     if(u) urls.push(u);
                                                                 }
+                                                                // Nối mảng cũ với ảnh mới
                                                                 handleUpdateItem(idx, 'gallery_imgs', [...(item.gallery_imgs||[]), ...urls]);
                                                             }} />
                                                         </label>

@@ -1,0 +1,129 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Minox Portfolio" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	</head>
+	
+    <body class="bg-[#f3f2ef] text-black antialiased selection:bg-black selection:text-white flex flex-col min-h-screen">
+        
+        <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-black h-16 shrink-0">
+            <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
+                <a href="/" class="flex items-center gap-4 cursor-pointer group">
+                    <div class="w-10 h-10 bg-black text-white flex items-center justify-center font-vibe text-2xl font-bold transition-transform group-hover:rotate-12">M</div>
+                    <div class="hidden md:block">
+                        <h1 class="font-vibe text-xl font-bold tracking-tighter leading-none">MINOX / MINH N.</h1>
+                        <p class="text-[10px] tracking-widest uppercase text-gray-500 font-bold">Graphic Design / Visual Design</p>
+                    </div>
+                </a>
+
+                <div class="flex space-x-12 h-full">
+                    <a href="/" class="group flex flex-col items-center justify-center h-full relative">
+                        <span class="font-vibe text-lg font-bold tracking-widest text-black transition-colors">WORK</span>
+                        <span class="absolute bottom-0 w-full h-[2px] bg-black opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    </a>
+                    <a href="/info" class="group flex flex-col items-center justify-center h-full relative">
+                        <span class="font-vibe text-lg font-bold tracking-widest text-gray-400 group-hover:text-black transition-colors">ABOUT</span>
+                        <span class="absolute bottom-0 w-full h-[2px] bg-black opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <a href="/admin" class="text-xs font-bold font-vibe border border-black px-3 py-1 hover:bg-black hover:text-white transition-colors cursor-pointer tracking-widest">
+                        LOGIN
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="flex-1 w-full">
+		    <slot />
+        </main>
+
+        <footer class="bg-white text-black mt-auto border-t border-black pt-16 shrink-0 z-10 relative">
+            <div class="max-w-6xl mx-auto px-4 pt-4 pb-8 text-center">
+                <div class="w-8 h-8 bg-black text-white flex items-center justify-center font-vibe text-lg font-bold mx-auto mb-6">M</div>
+                <h2 class="font-vibe text-3xl md:text-4xl font-bold tracking-[0.2em] leading-tight uppercase">
+                    READY TO <span class="border-b-2 border-black pb-1">VIBE?</span>
+                </h2>
+                <p class="font-vibe text-xs text-gray-400 mt-4 tracking-[0.3em] uppercase">Send your frequency</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto px-4 pb-16">
+                <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+                    
+                    <input type="hidden" name="access_key" value="a20571e2-2e49-460f-8481-eae284c04d1d">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <input type="text" name="name" required class="input-vibe-line w-full" placeholder="NAME" />
+                        </div>
+                        <div>
+                            <input type="email" name="email" required class="input-vibe-line w-full" placeholder="EMAIL" />
+                        </div>
+                    </div>
+                    <div>
+                        <textarea name="message" rows="1" required class="input-vibe-line w-full resize-none" placeholder="YOUR IDEA..."></textarea>
+                    </div>
+                    <div class="pt-8 text-center">
+                        <button type="submit" class="group relative inline-flex items-center justify-center overflow-hidden cursor-pointer">
+                            <span class="font-vibe text-lg font-bold tracking-[0.2em] uppercase group-hover:tracking-[0.3em] transition-all duration-300 border-b-2 border-black pb-1">
+                                Initiate Signal
+                            </span>
+                            <span class="ml-2 transition-transform duration-300 group-hover:translate-x-1">→</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="max-w-6xl mx-auto px-4 py-6 border-t border-gray-100 flex justify-between items-center text-[10px] text-gray-400 font-vibe tracking-widest uppercase">
+                <p>MINOX © 2026</p>
+                <div class="space-x-4">
+                    <a href="#" class="hover:text-black">LN</a>
+                    <a href="#" class="hover:text-black">Đoán Xem</a>
+                </div>
+            </div>
+        </footer>
+	</body>
+</html>
+
+<style is:global>
+    .font-vibe { font-family: 'Archivo Narrow', sans-serif; }
+    * { border-radius: 0 !important; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #000; }
+    body.noscroll { overflow: hidden !important; height: 100vh; width: 100%; position: fixed; } 
+
+    /* Input Style */
+    .input-vibe-line {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #e5e7eb;
+        border-radius: 0;
+        padding: 0.5rem 0;
+        font-family: 'Archivo Narrow', sans-serif;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+        outline: none;
+        text-transform: uppercase;
+    }
+    .input-vibe-line:focus { border-bottom-color: #000; }
+    .input-vibe-line::placeholder { color: #9ca3af; letter-spacing: 0.1em; font-weight: 500; font-size: 0.75rem; }
+</style>
